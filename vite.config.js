@@ -5,14 +5,14 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      fastRefresh: true,
+    }),
+
     tailwindcss(),
 
     VitePWA({
       registerType: 'autoUpdate',
-
-      filename: 'manifest.webmanifest',   
-      strategies: 'generateSW',          
 
       includeAssets: [
         'favicon.svg',
@@ -25,48 +25,28 @@ export default defineConfig({
         short_name: 'Attendance',
         description: 'Attendance App PWA',
 
-        theme_color: '#000000',
+        theme_color: '#ffffff',
         background_color: '#ffffff',
 
         display: 'standalone',
-        orientation: 'portrait',
         start_url: '/',
 
         icons: [
           {
-            src: '/icons/icon-192.png',
+            src: '/icon/icon.jpg',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/jpeg'
           },
           {
-            src: '/icons/icon-512.png',
+            src: '/icon/icon.jpg',
             sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: '/icons/icon-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
+            type: 'image/jpeg'
           }
         ]
       },
 
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: ({ request }) =>
-              request.destination === 'image',
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30
-              }
-            }
-          }
-        ]
+      devOptions: {
+        enabled: true
       }
     })
   ]
